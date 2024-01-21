@@ -53,9 +53,14 @@ export class NotesController {
   async findAllSharedNotes(
     @AuthenticatedUser() user: UserDocument
   ) {
-   
-    console.log("shere", user);
     return this.noteService.findAllSharedNotes(user._id);
   }
-
+  @Get(':id')
+  async findOne(
+    @Param() params: ObjectIdParam,
+    @AuthenticatedUser() user: UserDocument,
+  ) {
+   
+    return this.noteService.findOne(user,params.id);
+  }
 }

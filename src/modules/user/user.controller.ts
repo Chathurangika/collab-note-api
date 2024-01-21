@@ -25,11 +25,7 @@ export class UserController {
   async findOne(
     @Param() param: ObjectIdParam,
   ) {
-    const user = this.userService.findOne(param.id);
-    if (user != null) {
-      throw new BadRequestException('User not found');
-    }
-
+    const user = await this.userService.findOne(param.id);
     return user;
   }
 

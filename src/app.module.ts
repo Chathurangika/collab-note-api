@@ -13,6 +13,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthService } from './modules/auth/auth.service';
 import { NotesModule } from './modules/notes/notes.module';
+import { ProfileController } from './modules/profile/profile.controller';
 
 
 @Module({
@@ -34,7 +35,7 @@ import { NotesModule } from './modules/notes/notes.module';
     ProfileModule,
     NotesModule
   ],
-  controllers: [AppController, UserController, AuthController],
+  controllers: [AppController, UserController, AuthController, ProfileController],
   providers: [
     AppService,
     AuthService,

@@ -5,6 +5,7 @@ import { EditProfileDto } from './dto/editProfile.dto';
 import { ChanageUserPasswordDto } from '../user/dto/chanageUserPassword.dto';
 import { Types } from 'mongoose';
 import { UserDocument } from '../user/schemas/user.schema';
+import { AuthenticatedUser } from 'src/common/authenticated-user.decorator';
 
 @Controller('profile')
 export class ProfileController {
@@ -18,7 +19,7 @@ export class ProfileController {
 
   @Put('edit')
   async editProfile(
-    user: UserDocument,
+    @AuthenticatedUser() user: UserDocument,
     @Body() editProfileDto: EditProfileDto,
   ) {
     return await this.userService.updateUser(user, editProfileDto);

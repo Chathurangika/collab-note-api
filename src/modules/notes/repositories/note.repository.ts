@@ -26,8 +26,8 @@ export class NoteRepository {
     return this.note.create(data);
   }
 
-  findOne(id: Types.ObjectId) {
-    return this.note.findOne({ _id: id });
+  async findOne(id: Types.ObjectId) {
+    return await this.note.findById({ _id: id });
   }
   deleteOne(id: Types.ObjectId) {
     return this.note.deleteOne({ _id: id });

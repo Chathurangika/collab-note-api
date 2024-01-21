@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { EditUserDto } from './dto/editUser.dto';
 import { UserRepository } from './repositories/user.repository';
 import { UserDocument } from './schemas/user.schema';
@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) { }
 
   findAllOnSearch(userId: Types.ObjectId, query: SearchUserDto) {
     return this.userRepository.findAllOnSearch(userId, query);
@@ -32,8 +32,13 @@ export class UserService {
     });
   }
 
-  findOne(id: Types.ObjectId) {
-    return this.userRepository.findOne(id);
+  async findOne(id: Types.ObjectId) {
+    const user = await this.userRepository.findOne(id);
+    if (user == null) {
+      throw new BadRequestException('User not found');
+    }
+
+    return user;
   }
 
   findOneByEmail(email: string) {

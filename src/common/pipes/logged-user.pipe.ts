@@ -7,9 +7,6 @@ export class LoggedUserPipe implements PipeTransform {
   constructor(private userService: UserService) {}
   
   async transform(value: any, metadata: ArgumentMetadata) {
-
-    console.log("pipe",value);
-
     const user = await this.userService.findOne(value.sub);
 
     if (!user) {

@@ -25,8 +25,6 @@ export class UserRepository {
         if (validSortFields.includes(query.sortKey)) {
             sortKey = query.sortKey;
         }
-        console.log("userlid",userId);
-
         const where: FilterQuery<UserDocument> = {'_id':{ $ne: userId }};
 
         if (!!query.keyword) {
@@ -55,8 +53,8 @@ export class UserRepository {
         return this.user.create(data);
     }
 
-    findOne(id: Types.ObjectId) {
-        return this.user.findOne({ _id: id });
+    async findOne(id: Types.ObjectId) {
+        return await this.user.findById({ _id: id });
     }
 
     findOneByEmail(email: string) {
