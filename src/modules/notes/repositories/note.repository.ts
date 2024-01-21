@@ -11,9 +11,9 @@ export class NoteRepository {
     @InjectModel(Note.name) private readonly note: Model<NoteDocument>,
   ) { }
 
-  async findAllToUser(userId: Types.ObjectId) {
+  async findAllUserNotes(userId: Types.ObjectId) {
 
-    const where: FilterQuery<NoteDocument> = { 'owner': userId };
+    const where: FilterQuery<NoteDocument> = { 'owner._id': userId };
     const results = await this.note
       .find(where)
       .sort([["_id", -1]]);
@@ -63,7 +63,7 @@ export class NoteRepository {
       { _id: noteId },
       {
         $push: {
-          sharedUsers: users,
+          sharedUsers: { $each: users },
         },
       },
       { new: true, session },
@@ -80,6 +80,16 @@ export class NoteRepository {
       },
       { new: true },
     );
+  }
+
+  async findAllSharedNotes(userId) {
+
+    const where: FilterQuery<NoteDocument> = { 'sharedUsers': { $all: [userId] } };
+    const results = await this.note
+      .find(where)
+      .sort([["_id", -1]]);
+
+    return results;
   }
 
 }

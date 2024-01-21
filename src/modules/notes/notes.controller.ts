@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { AuthenticatedUser } from 'src/common/authenticated-user.decorator';
 import { UserDocument } from '../user/schemas/user.schema';
@@ -39,6 +39,23 @@ export class NotesController {
   ) {
    
     return this.noteService.addContent(user,params.id,data);
+  }
+
+  @Get('user-notes')
+  async findAllUserNotes(
+    @AuthenticatedUser() user: UserDocument
+  ) {
+   
+    return this.noteService.findAllUserNotes(user._id);
+  }
+
+  @Get('shared-notes')
+  async findAllSharedNotes(
+    @AuthenticatedUser() user: UserDocument
+  ) {
+   
+    console.log("shere", user);
+    return this.noteService.findAllSharedNotes(user._id);
   }
 
 }

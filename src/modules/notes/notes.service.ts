@@ -104,4 +104,13 @@ export class NotesService {
         return this.noteRepository.addContent(note._id, contentUpdateDetails);
     }
 
+
+    findAllUserNotes(userId:Types.ObjectId){
+        return this.noteRepository.findAllUserNotes(userId);
+    }
+
+    findAllSharedNotes(userId:Types.ObjectId){
+        return this.noteRepository.findAllSharedNotes(userId);
+    }
+
 }

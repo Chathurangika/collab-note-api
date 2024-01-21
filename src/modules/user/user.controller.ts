@@ -1,8 +1,9 @@
-import { Controller, Get, Query, Req } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Param, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { SearchUserDto } from './dto/searchUser.dto';
 import { AuthenticatedUser } from 'src/common/authenticated-user.decorator';
 import { UserDocument } from './schemas/user.schema';
+import { ObjectIdParam } from 'src/common/params';
 
 
 @Controller('user')
@@ -18,6 +19,18 @@ export class UserController {
 
     const users = this.userService.findAllOnSearch(user._id, query);
     return users;
+  }
+
+  @Get(':id')
+  async findOne(
+    @Param() param: ObjectIdParam,
+  ) {
+    const user = this.userService.findOne(param.id);
+    if (user != null) {
+      throw new BadRequestException('User not found');
+    }
+
+    return user;
   }
 
 }

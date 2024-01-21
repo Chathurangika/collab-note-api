@@ -8,9 +8,7 @@ import { UserDocument } from '../user/schemas/user.schema';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(
-    private readonly userService: UserService
-  ) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   async findOne(id: Types.ObjectId) {
@@ -20,26 +18,18 @@ export class ProfileController {
 
   @Put('edit')
   async editProfile(
-    user:UserDocument,
-    @Body() editProfileDto: EditProfileDto
+    user: UserDocument,
+    @Body() editProfileDto: EditProfileDto,
   ) {
-    const updatedUser = await this.userService.updateUser(
-      user,
-      editProfileDto,
-    );
-
-    return updatedUser;
+    return await this.userService.updateUser(user, editProfileDto);
   }
 
   @Post('change-password')
   async changePassword(
-    user:UserDocument,
-    @Body() chanageUserPasswordDto: ChanageUserPasswordDto
-  ) {
-    await this.userService.changePassword(
-      user,
-      chanageUserPasswordDto,
-    );
+    user: UserDocument,
+    @Body() chanageUserPasswordDto: ChanageUserPasswordDto,
+  ) {   
+    await this.userService.changePassword(user, chanageUserPasswordDto);
 
     return { message: 'password changed' };
   }
