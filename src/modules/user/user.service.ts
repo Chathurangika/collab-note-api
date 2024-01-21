@@ -47,7 +47,6 @@ export class UserService {
         return this.userRepository.findOneByEmail(email);
     }
 
-
     async updateUser(user: UserDocument, data: EditUserDto) {
         const updatedUser = await this.userRepository.updateOne(
             user._id,
@@ -56,11 +55,15 @@ export class UserService {
         return updatedUser;
     }
 
-
     async changePassword(user: UserDocument, data: ChanageUserPasswordDto) {
+
+        const saltOrRounds = await bcrypt.genSalt();;
+        const password = data.password;
+        const hash = await bcrypt.hash(password, saltOrRounds);
+
         await this.userRepository.changePassword(
             user._id,
-            data,
+            hash,
         );
     }
 

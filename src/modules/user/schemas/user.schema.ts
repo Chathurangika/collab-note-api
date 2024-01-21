@@ -24,6 +24,8 @@ export class User {
 
   @Prop({ required: true, default: true })
   enabled: boolean;
+
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

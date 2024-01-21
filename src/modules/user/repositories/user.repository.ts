@@ -5,7 +5,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { EditUserDto } from "../dto/editUser.dto";
 import { UserEnabledDto } from "../dto/user-enabled.dto";
 import { SearchUserDto } from "../dto/searchUser.dto";
-import { ChanageUserPasswordDto } from "../dto/chanageUserPassword.dto";
 
 @Injectable()
 export class UserRepository {
@@ -96,11 +95,11 @@ export class UserRepository {
 
     changePassword(
         id: Types.ObjectId,
-        data: ChanageUserPasswordDto,
+        hashedPassword: string,
     ) {
         return this.user.findOneAndUpdate(
             { _id: id },
-            { password: data.password },
+            { password: hashedPassword },
             { new: true },
         );
     }

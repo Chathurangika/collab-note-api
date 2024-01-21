@@ -12,6 +12,7 @@ import { AuthGuard } from './modules/auth/utils/auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthService } from './modules/auth/auth.service';
+import { NotesModule } from './modules/notes/notes.module';
 
 
 @Module({
@@ -30,7 +31,8 @@ import { AuthService } from './modules/auth/auth.service';
     }),
     UserModule,
     AuthModule,
-    ProfileModule
+    ProfileModule,
+    NotesModule
   ],
   controllers: [AppController, UserController, AuthController],
   providers: [
